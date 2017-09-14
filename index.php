@@ -15,7 +15,23 @@
         <script src="js/vendor/modernizr-2.8.3.min.js"></script>
     </head>
     <body>
-        <form class="" action="index.php" method="post">
+      <?php try{
+          $bdd = new PDO('mysql:host=localhost;dbname=exoSql;charset=utf8', 'root', 'root');
+          array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
+        }
+      catch (Exception $e){
+          die('Erreur : ' . $e->getMessage());
+        }
+      $reponse = $bdd->query('SELECT titre, contenu, date_creation FROM billets')?>
+      <div id="blog">
+        <?php while($donnees = $reponse->fetch()){ ?>
+          <article class="billet">
+            <h2><?php echo $donnees['titre'].' '.$donnees['date_creation']; ?></h2>
+            <p><?php echo $donnees['contenu']; ?></p>
+          </article>
+        <?php } ?>
+      </div>
+        <!--<form class="" action="index.php" method="post">
           <label for="nom">nom</label>
           <input type="text" name="nom" value=""><br>
           <label for="possesseur">possesseur</label>
@@ -31,14 +47,24 @@
           <input type="submit" value="valider">
         </form>
       <?php
-      try{
-          $bdd = new PDO('mysql:host=localhost;dbname=ExoSql;charset=utf8', 'root', 'root');
-          array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
-        }
-      catch (Exception $e){
-          die('Erreur : ' . $e->getMessage());
-        }
+      /*
 
+        $reponse = $bdd->query('SELECT avg(prix) as moyenne_prix, console FROM jeux_video WHERE possesseur=\'florent\' group by console') or die(print_r($bdd->errorInfo()));
+        while($donnees = $reponse->fetch()){
+
+        ?>
+
+        <p><?php echo $donnees['moyenne_prix'] .' : '. $donnees['console']; ?></p>
+
+<?php
+
+}
+
+$reponse->closeCursor(); // Termine le traitement de la requête
+
+
+?>
+<?php
         $nom = $_POST['nom'];
         $possesseur = $_POST['possesseur'];
         $console = $_POST['console'];
@@ -55,10 +81,10 @@
         'commentaires' => $commentaires
         ));
 
-        echo 'Le jeu a bien été ajouté !';
-        $req->closeCursor();
+        echo 'Le jeu '.$nom. ' a bien été ajouté !';
+        $req->closeCursor();*/
 ?>
-
+-->
         <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.12.0.min.js"><\/script>')</script>
         <script src="js/plugins.js"></script>
