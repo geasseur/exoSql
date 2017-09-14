@@ -22,12 +22,16 @@
       catch (Exception $e){
           die('Erreur : ' . $e->getMessage());
         }
-      $reponse = $bdd->query('SELECT titre, contenu, date_creation FROM billets')?>
+      $reponse = $bdd->query('SELECT id, titre, contenu, date_creation FROM billets')?>
       <div id="blog">
         <?php while($donnees = $reponse->fetch()){ ?>
           <article class="billet">
             <h2><?php echo $donnees['titre'].' '.$donnees['date_creation']; ?></h2>
             <p><?php echo $donnees['contenu']; ?></p>
+            <form class="" action="php/commentaire.php" method="post">
+              <input type="number" name="id_billet" value="<?php echo $donnees['id'] ?>">
+              <input type="submit" value="voir commentaires">
+            </form>
           </article>
         <?php } ?>
       </div>
