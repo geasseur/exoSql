@@ -22,6 +22,28 @@
       catch (Exception $e){
           die('Erreur : ' . $e->getMessage());
         }
+        $reponse = $bdd->query('SELECT j.nom as nom_jeu, p.prenom as prenom_proprietaire
+        FROM proprietaire as p
+        INNER JOIN jeux_video as j
+        ON j.id_proprietaire = p.id
+        where j.console = \'pc\'
+        order by possesseur')
+        ?>
+        <div class="">
+          <?php while($donnees = $reponse->fetch()){ ?>
+            <article class="">
+              <p><?php echo 'nom du jeu: '.$donnees['nom_jeu'] .' et son possesseur: '.$donnees['prenom_proprietaire']; ?></p>
+            </article>
+          <?php } ?>
+        </div>
+      <!--
+      <?php/* try{
+          $bdd = new PDO('mysql:host=localhost;dbname=exoSql;charset=utf8', 'root', 'root');
+          array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
+        }
+      catch (Exception $e){
+          die('Erreur : ' . $e->getMessage());
+        }
       $reponse = $bdd->query('SELECT id, titre, contenu, date_creation FROM billets')?>
       <div id="blog">
         <?php while($donnees = $reponse->fetch()){ ?>
@@ -33,8 +55,12 @@
               <input type="submit" value="voir commentaires">
             </form>
           </article>
-        <?php } ?>
-      </div>
+        <?php } */?>
+      </div>-->
+
+
+
+
         <!--<form class="" action="index.php" method="post">
           <label for="nom">nom</label>
           <input type="text" name="nom" value=""><br>
